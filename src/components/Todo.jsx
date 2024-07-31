@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Todo = ({ task, deleteTodo }) => {
+  const [isChecked, setIsChecked] = useState(true);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    console.log(task);
+
+    task.isChecked = isChecked;
+    console.log(task);
+  };
+
   return (
     <section className="main">
       <input className="toggle-all" type="checkbox" />
-      <label>Mark all as complete</label>
       <ul className="todo-list">
         <li>
           <div className="view">
-            <input type="checkbox" property="done" className="toggle" />
-            <label>{task.task}</label>
+            <input
+              type="checkbox"
+              className="toggle"
+              onChange={handleCheckboxChange}
+              property="done"
+            />
+            <label
+              style={{
+                textDecoration: task.isChecked ? "line-through" : "none",
+              }}
+            >
+              {task.task}
+            </label>
+
             <button
               className="destroy"
               onClick={() => deleteTodo(task.id)}
